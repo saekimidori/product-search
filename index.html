@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product Search</title>
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Product Search</h1>
+        <p>Find products using the Fake Store API</p>
+    </header>
+
+    <main>
+        <form id="search-form">
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Search for a product..."
+            >
+            <button type="submit">Search</button>
+        </form>
+
+        <section id="product-results">
+            <p id="status-message">Loading products...</p>
+        </section>
+    </main>
+
+    <script src="product-search.js"></script>
+</body>
+</html>
