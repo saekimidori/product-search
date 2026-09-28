@@ -56,7 +56,9 @@ function displayProducts(productsToDisplay) {
         productCard.innerHTML = `
             <img src="${product.images[0]}" alt="${product.title}">
             <h2>${product.title}</h2>
-            <p>$${product.price}</p>
+            <p class="category">${product.category}</p>
+            <p class="rating">Rating: ${product.rating}</p>
+            <p class="price">$${product.price.toFixed(2)}</p>
         `
 
         productResults.appendChild(productCard)
