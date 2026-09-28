@@ -2,8 +2,9 @@ let products = []
 
 const searchForm = document.querySelector('#search-form')
 const searchInput = document.querySelector('#search-input')
-const productResults = document.querySelector('#product-results')
 const categorySelect = document.querySelector('#category-select')
+const sortSelect = document.querySelector('#sort-select')
+const productResults = document.querySelector('#product-results')
 
 fetch('https://dummyjson.com/products')
     .then(response => response.json())
@@ -23,31 +24,25 @@ fetch('https://dummyjson.com/products')
     })
 
 function createCategoryOptions() {
-
     const categories = []
 
     products.forEach(product => {
-
         if (!categories.includes(product.category)) {
             categories.push(product.category)
         }
-
     })
 
     categories.forEach(category => {
-
         const option = document.createElement('option')
 
         option.value = category
-        option.textContent = category
+        option.textContent = category.charAt(0).toUpperCase() + category.slice(1)
 
         categorySelect.appendChild(option)
-
     })
 }
 
 function displayProducts(productsToDisplay) {
-
     productResults.innerHTML = ''
 
     if (productsToDisplay.length === 0) {
@@ -56,7 +51,6 @@ function displayProducts(productsToDisplay) {
     }
 
     productsToDisplay.forEach(product => {
-
         const productCard = document.createElement('article')
 
         productCard.innerHTML = `
@@ -72,8 +66,9 @@ function displayProducts(productsToDisplay) {
 function filterProducts() {
     const searchTerm = searchInput.value.toLowerCase()
     const selectedCategory = categorySelect.value
+    const selectedSort = sortSelect.value
 
-    const filteredProducts = products.filter(product => {
+    let filteredProducts = products.filter(product => {
         const matchesSearch = product.title
             .toLowerCase()
             .includes(searchTerm);
@@ -85,6 +80,14 @@ function filterProducts() {
         return matchesSearch && matchesCategory
     })
 
+    if (selectedSort === 'price-low') {
+        filteredProducts.sort((a, b) => a.price - b.price)
+    }
+
+    if (selectedSort === 'price-high') {
+        filteredProducts.sort((a, b) => b.price - a.price)
+    }
+
     displayProducts(filteredProducts)
 }
 
@@ -94,5 +97,9 @@ searchForm.addEventListener('submit', function(event) {
 })
 
 categorySelect.addEventListener('change', function() {
+    filterProducts()
+})
+
+sortSelect.addEventListener('change', function() {
     filterProducts()
 })
