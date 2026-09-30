@@ -131,6 +131,14 @@ function filterProducts() {
         filteredProducts.sort((a, b) => b.price - a.price)
     }
 
+    if (selectedSort === 'rating-high') {
+        filteredProducts.sort((a, b) => b.rating - a.rating)
+    }
+
+    if (selectedSort === 'rating-low') {
+        filteredProducts.sort((a, b) => a.rating - b.rating)
+    }
+
     displayProducts(filteredProducts)
 }
 
