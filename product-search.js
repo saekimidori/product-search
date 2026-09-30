@@ -2,10 +2,10 @@ let products = []
 
 const searchForm = document.querySelector('#search-form')
 const searchInput = document.querySelector('#search-input')
+const clearSearchButton = document.querySelector('#clear-search')
 const categorySelect = document.querySelector('#category-select')
 const sortSelect = document.querySelector('#sort-select')
 const productResults = document.querySelector('#product-results')
-
 const productModal = document.querySelector('#product-modal')
 const productDetails = document.querySelector('#product-details')
 const closeModal = document.querySelector('#close-modal')
@@ -63,9 +63,12 @@ function displayProducts(productsToDisplay) {
             <p class="category">${product.category}</p>
             <p class="rating">Rating: ${product.rating}</p>
             <p class="price">$${product.price.toFixed(2)}</p>
+            <button class="view-details">View Details</button>
         `
 
-        productCard.addEventListener('click', function() {
+        const viewDetailsButton = productCard.querySelector('.view-details')
+
+        viewDetailsButton.addEventListener('click', function() {
             showProductDetails(product)
         })
 
@@ -134,6 +137,18 @@ function filterProducts() {
 searchForm.addEventListener('submit', function(event) {
     event.preventDefault()
     filterProducts()
+})
+
+clearSearchButton.addEventListener('click', function() {
+    searchInput.value = ''
+    displayProducts(products)
+})
+
+searchInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        searchInput.value = ''
+        displayProducts(products)
+    }
 })
 
 categorySelect.addEventListener('change', function() {

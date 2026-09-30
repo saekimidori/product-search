@@ -155,6 +155,23 @@ main {
     margin: 10px 0;
 }
 
+.view-details {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.view-details:hover {
+    opacity: 0.8;
+}
+
+.view-details:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
 @media (max-width: 900px) {
     #product-results {
         grid-template-columns: repeat(2, 1fr);
