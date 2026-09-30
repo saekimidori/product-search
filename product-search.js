@@ -123,20 +123,22 @@ function filterProducts() {
         return matchesSearch && matchesCategory
     })
 
-    if (selectedSort === 'price-low') {
+    switch (selectedSort) {
+    case 'price-low':
         filteredProducts.sort((a, b) => a.price - b.price)
-    }
+        break
 
-    if (selectedSort === 'price-high') {
+    case 'price-high':
         filteredProducts.sort((a, b) => b.price - a.price)
-    }
+        break
 
-    if (selectedSort === 'rating-high') {
+    case 'rating-high':
         filteredProducts.sort((a, b) => b.rating - a.rating)
-    }
+        break
 
-    if (selectedSort === 'rating-low') {
+    case 'rating-low':
         filteredProducts.sort((a, b) => a.rating - b.rating)
+        break
     }
 
     displayProducts(filteredProducts)
