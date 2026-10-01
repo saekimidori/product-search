@@ -12,6 +12,12 @@ const productCount = document.querySelector('#product-count')
 const productModal = document.querySelector('#product-modal')
 const productDetails = document.querySelector('#product-details')
 const closeModal = document.querySelector('#close-modal')
+const urlParams = new URLSearchParams(window.location.search)
+const savedSearch = urlParams.get('search')
+
+if (savedSearch) {
+    searchInput.value = savedSearch
+}
 
 fetch('https://dummyjson.com/products')
     .then(response => {
@@ -24,7 +30,7 @@ fetch('https://dummyjson.com/products')
     .then(data => {
         products = data.products
         createCategoryOptions()
-        displayProducts(products)
+        filterProducts()
     })
     .catch(error => {
         productResults.innerHTML =
@@ -174,15 +180,18 @@ function filterProducts(resetLimit = true) {
 searchForm.addEventListener('submit', function(event) {
     event.preventDefault()
     filterProducts()
+    updateURL()
 })
 
 searchInput.addEventListener('input', function() {
     filterProducts()
+    updateURL()
 })
 
 clearSearchButton.addEventListener('click', function() {
     searchInput.value = ''
     filterProducts()
+    updateURL()
 })
 
 searchInput.addEventListener('keydown', function(event) {
@@ -204,3 +213,21 @@ loadMoreButton.addEventListener('click', function() {
     productsToShow += 12
     filterProducts(false)
 })
+
+function updateURL() {
+    const searchTerm = searchInput.value.trim()
+
+    const params = new URLSearchParams()
+
+    if (searchTerm) {
+        params.set('search', searchTerm)
+    }
+
+    const queryString = params.toString()
+
+    const newURL = queryString
+        ? `${window.location.pathname}?${queryString}`
+        : window.location.pathname
+
+    window.history.replaceState({}, '', newURL)
+}
