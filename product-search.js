@@ -11,16 +11,19 @@ const productDetails = document.querySelector('#product-details')
 const closeModal = document.querySelector('#close-modal')
 
 fetch('https://dummyjson.com/products')
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`)
+        }
+        
+        return response.json()
+    })
     .then(data => {
-
         products = data.products
         createCategoryOptions()
         displayProducts(products)
-
     })
     .catch(error => {
-
         productResults.innerHTML =
             '<p>Unable to load products. Please try again later.</p>'
 
