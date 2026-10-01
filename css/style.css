@@ -43,6 +43,34 @@ main {
     gap: 20px;
 }
 
+#load-more {
+    display: block;
+    margin: 30px auto;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#load-more:hover {
+    opacity: 0.8;
+}
+
+#load-more:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+#load-more-container {
+    text-align: center;
+    margin: 30px 0;
+}
+
+#product-count {
+    margin-bottom: 10px;
+}
+
 #product-results article {
     background: white;
     border: 1px solid #ddd;

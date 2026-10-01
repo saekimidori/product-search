@@ -8,6 +8,7 @@ const categorySelect = document.querySelector('#category-select')
 const sortSelect = document.querySelector('#sort-select')
 const productResults = document.querySelector('#product-results')
 const loadMoreButton = document.querySelector('#load-more')
+const productCount = document.querySelector('#product-count')
 const productModal = document.querySelector('#product-modal')
 const productDetails = document.querySelector('#product-details')
 const closeModal = document.querySelector('#close-modal')
@@ -82,6 +83,14 @@ function displayProducts(productsToDisplay) {
 
         productResults.appendChild(productCard)
     })
+
+    const visibleCount = Math.min(
+        productsToShow,
+        productsToDisplay.length
+    )
+
+    productCount.textContent =
+        `Showing ${visibleCount} of ${productsToDisplay.length}`
 
     if (productsToShow >= productsToDisplay.length) {
         loadMoreButton.style.display = 'none'
