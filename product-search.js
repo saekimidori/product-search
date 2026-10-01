@@ -149,9 +149,13 @@ searchForm.addEventListener('submit', function(event) {
     filterProducts()
 })
 
+searchInput.addEventListener('input', function() {
+    filterProducts()
+})
+
 clearSearchButton.addEventListener('click', function() {
     searchInput.value = ''
-    displayProducts(products)
+    filterProducts()
 })
 
 searchInput.addEventListener('keydown', function(event) {
