@@ -1,4 +1,5 @@
 let products = []
+let productsToShow = 12
 
 const searchForm = document.querySelector('#search-form')
 const searchInput = document.querySelector('#search-input')
@@ -6,6 +7,7 @@ const clearSearchButton = document.querySelector('#clear-search')
 const categorySelect = document.querySelector('#category-select')
 const sortSelect = document.querySelector('#sort-select')
 const productResults = document.querySelector('#product-results')
+const loadMoreButton = document.querySelector('#load-more')
 const productModal = document.querySelector('#product-modal')
 const productDetails = document.querySelector('#product-details')
 const closeModal = document.querySelector('#close-modal')
@@ -52,12 +54,15 @@ function createCategoryOptions() {
 function displayProducts(productsToDisplay) {
     productResults.innerHTML = ''
 
+    const visibleProducts = productsToDisplay.slice(0, productsToShow)
+
     if (productsToDisplay.length === 0) {
         productResults.innerHTML = '<p>No products found.</p>'
-        return;
+        loadMoreButton.style.display = 'none'
+        return
     }
 
-    productsToDisplay.forEach(product => {
+    visibleProducts.forEach(product => {
         const productCard = document.createElement('article')
 
         productCard.innerHTML = `
@@ -77,6 +82,12 @@ function displayProducts(productsToDisplay) {
 
         productResults.appendChild(productCard)
     })
+
+    if (productsToShow >= productsToDisplay.length) {
+        loadMoreButton.style.display = 'none'
+    } else {
+        loadMoreButton.style.display = 'block'
+    }
 }
 
 function showProductDetails(product) {
@@ -109,7 +120,11 @@ document.addEventListener('keydown', function(event) {
     }
 })
 
-function filterProducts() {
+function filterProducts(resetLimit = true) {
+    if (resetLimit) {
+        productsToShow = 12
+    }
+
     const searchTerm = searchInput.value.toLowerCase()
     const selectedCategory = categorySelect.value
     const selectedSort = sortSelect.value
@@ -174,4 +189,9 @@ categorySelect.addEventListener('change', function() {
 
 sortSelect.addEventListener('change', function() {
     filterProducts()
+})
+
+loadMoreButton.addEventListener('click', function() {
+    productsToShow += 12
+    filterProducts(false)
 })
