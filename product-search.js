@@ -13,7 +13,10 @@ const productModal = document.querySelector('#product-modal')
 const productDetails = document.querySelector('#product-details')
 const closeModal = document.querySelector('#close-modal')
 const urlParams = new URLSearchParams(window.location.search)
+
 const savedSearch = urlParams.get('search')
+const savedCategory = urlParams.get('category')
+const savedSort = urlParams.get('sort')
 
 if (savedSearch) {
     searchInput.value = savedSearch
@@ -30,6 +33,25 @@ fetch('https://dummyjson.com/products')
     .then(data => {
         products = data.products
         createCategoryOptions()
+
+        if (savedCategory) {
+            const categoryExists = [...categorySelect.options]
+                .some(option => option.value === savedCategory)
+
+            if (categoryExists) {
+                categorySelect.value = savedCategory
+            }
+        }
+
+        if (savedSort) {
+            const sortExists = [...sortSelect.options]
+                .some(option => option.value === savedSort)
+
+            if (sortExists) {
+                sortSelect.value = savedSort
+            }
+        }
+
         filterProducts()
     })
     .catch(error => {
@@ -203,10 +225,12 @@ searchInput.addEventListener('keydown', function(event) {
 
 categorySelect.addEventListener('change', function() {
     filterProducts()
+    updateURL()
 })
 
 sortSelect.addEventListener('change', function() {
     filterProducts()
+    updateURL()
 })
 
 loadMoreButton.addEventListener('click', function() {
@@ -216,11 +240,21 @@ loadMoreButton.addEventListener('click', function() {
 
 function updateURL() {
     const searchTerm = searchInput.value.trim()
+    const selectedCategory = categorySelect.value
+    const selectedSort = sortSelect.value
 
     const params = new URLSearchParams()
 
     if (searchTerm) {
         params.set('search', searchTerm)
+    }
+
+    if (selectedCategory && selectedCategory !== 'all') {
+        params.set('category', selectedCategory)
+    }
+
+    if (selectedSort && selectedSort !== 'default') {
+        params.set('sort', selectedSort)
     }
 
     const queryString = params.toString()
