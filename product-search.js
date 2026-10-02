@@ -1,6 +1,7 @@
 let products = []
 let productsToShow = 12
 let favorites = JSON.parse(localStorage.getItem('favorites')) || []
+let lastFocusedElement
 
 const searchForm = document.querySelector('#search-form')
 const searchInput = document.querySelector('#search-input')
@@ -108,17 +109,27 @@ function displayProducts(productsToDisplay) {
             >
                 View Details
             </button>
-            <button
-                class="favorite-button"
-                type="button"
-                aria-label="Add ${product.title} to favorites"
-            >
+            <button class="favorite-button" type="button">
                 ♡ Add to Favorites
             </button>
         `
 
         const viewDetailsButton = productCard.querySelector('.view-details')
         const favoriteButton = productCard.querySelector('.favorite-button')
+
+        if (favorites.includes(product.id)) {
+            favoriteButton.textContent = '♥ Remove from Favorites'
+            favoriteButton.setAttribute(
+                'aria-label',
+                `Remove ${product.title} from favorites`
+            )
+        } else {
+            favoriteButton.textContent = '♡ Add to Favorites'
+            favoriteButton.setAttribute(
+                'aria-label',
+                `Add ${product.title} to favorites`
+            )
+        }
 
         viewDetailsButton.addEventListener('click', function() {
             showProductDetails(product)
@@ -127,14 +138,6 @@ function displayProducts(productsToDisplay) {
         favoriteButton.addEventListener('click', function() {
             toggleFavorite(product)
         })
-
-        if (favorites.includes(product.id)) {
-            favoriteButton.textContent = '♥ Remove from Favorites'
-            favoriteButton.setAttribute(
-                'aria-label',
-                `Remove ${product.title} from favorites`
-            )
-        }
 
         productResults.appendChild(productCard)
     })
@@ -155,6 +158,8 @@ function displayProducts(productsToDisplay) {
 }
 
 function showProductDetails(product) {
+    lastFocusedElement = document.activeElement
+
     productDetails.innerHTML = `
         <img src="${product.images[0]}" alt="${product.title}">
         <h2 id="modal-title" class="modal-title">${product.title}</h2>
@@ -166,6 +171,8 @@ function showProductDetails(product) {
     `
 
     productModal.style.display = 'block'
+
+    productModal.querySelector('.modal-content').focus()
 }
 
 function toggleFavorite(product) {
@@ -182,17 +189,55 @@ function toggleFavorite(product) {
 
 closeModal.addEventListener('click', function() {
     productModal.style.display = 'none'
+
+    if (lastFocusedElement) {
+        lastFocusedElement.focus()
+    }
 })
 
 productModal.addEventListener('click', function(event) {
     if (event.target === productModal) {
         productModal.style.display = 'none'
     }
+
+    if (lastFocusedElement) {
+        lastFocusedElement.focus()
+    }
 })
 
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape' && productModal.style.display === 'block') {
+    if (productModal.style.display !== 'block') {
+        return
+    }
+
+    if (event.key === 'Escape') {
         productModal.style.display = 'none'
+
+        if (lastFocusedElement) {
+            lastFocusedElement.focus()
+        }
+
+        return
+    }
+
+    if (event.key === 'Tab') {
+        const focusableElements = productModal.querySelectorAll(
+            'button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+
+        const firstElement = focusableElements[0]
+        const lastElement =
+            focusableElements[focusableElements.length - 1]
+
+        if (event.shiftKey && document.activeElement === firstElement) {
+            event.preventDefault()
+            lastElement.focus()
+        }
+
+        if (!event.shiftKey && document.activeElement === lastElement) {
+            event.preventDefault()
+            firstElement.focus()
+        }
     }
 })
 
