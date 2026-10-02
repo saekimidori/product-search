@@ -100,7 +100,13 @@ function displayProducts(productsToDisplay) {
             <p class="category">${product.category}</p>
             <p class="rating">Rating: ${product.rating}</p>
             <p class="price">$${product.price.toFixed(2)}</p>
-            <button class="view-details">View Details</button>
+            <button
+                class="view-details"
+                type="button"
+                aria-label="View details for ${product.title}"
+            >
+                View Details
+            </button>
         `
 
         const viewDetailsButton = productCard.querySelector('.view-details')
@@ -152,7 +158,7 @@ productModal.addEventListener('click', function(event) {
 })
 
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' && productModal.style.display === 'block') {
         productModal.style.display = 'none'
     }
 })
