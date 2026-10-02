@@ -1,5 +1,6 @@
 let products = []
 let productsToShow = 12
+let favorites = JSON.parse(localStorage.getItem('favorites')) || []
 
 const searchForm = document.querySelector('#search-form')
 const searchInput = document.querySelector('#search-input')
@@ -107,13 +108,33 @@ function displayProducts(productsToDisplay) {
             >
                 View Details
             </button>
+            <button
+                class="favorite-button"
+                type="button"
+                aria-label="Add ${product.title} to favorites"
+            >
+                ♡ Add to Favorites
+            </button>
         `
 
         const viewDetailsButton = productCard.querySelector('.view-details')
+        const favoriteButton = productCard.querySelector('.favorite-button')
 
         viewDetailsButton.addEventListener('click', function() {
             showProductDetails(product)
         })
+
+        favoriteButton.addEventListener('click', function() {
+            toggleFavorite(product)
+        })
+
+        if (favorites.includes(product.id)) {
+            favoriteButton.textContent = '♥ Remove from Favorites'
+            favoriteButton.setAttribute(
+                'aria-label',
+                `Remove ${product.title} from favorites`
+            )
+        }
 
         productResults.appendChild(productCard)
     })
@@ -145,6 +166,18 @@ function showProductDetails(product) {
     `
 
     productModal.style.display = 'block'
+}
+
+function toggleFavorite(product) {
+    if (favorites.includes(product.id)) {
+        favorites = favorites.filter(id => id !== product.id)
+    } else {
+        favorites.push(product.id)
+    }
+
+    localStorage.setItem('favorites', JSON.stringify(favorites))
+
+    filterProducts()
 }
 
 closeModal.addEventListener('click', function() {
@@ -179,6 +212,8 @@ function filterProducts(resetLimit = true) {
 
         const matchesCategory =
             selectedCategory === 'all' ||
+            (selectedCategory === 'favorites' &&
+                favorites.includes(product.id)) ||
             product.category === selectedCategory
 
         return matchesSearch && matchesCategory
