@@ -183,7 +183,8 @@ main {
     margin: 10px 0;
 }
 
-.view-details {
+.view-details, .favorite-button {
+    margin-top: 5px;
     padding: 10px 16px;
     border: none;
     border-radius: 6px;
@@ -191,7 +192,7 @@ main {
     font-size: 14px;
 }
 
-.view-details:hover {
+.view-details:hover, .favorite-button:hover {
     opacity: 0.8;
 }
 
