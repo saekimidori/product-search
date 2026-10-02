@@ -79,6 +79,7 @@ main {
     transition: transform 0.2s;
     display: flex;
     flex-direction: column;
+    min-height: 420px;
 }
 
 #product-results article:hover {
@@ -183,8 +184,17 @@ main {
     margin: 10px 0;
 }
 
-.view-details, .favorite-button {
-    margin-top: 5px;
+#product-results article button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.card-actions {
+    margin-top: auto;
+}
+
+.view-details, 
+.favorite-button {
     padding: 10px 16px;
     border: none;
     border-radius: 6px;
@@ -192,11 +202,13 @@ main {
     font-size: 14px;
 }
 
-.view-details:hover, .favorite-button:hover {
+.view-details:hover, 
+.favorite-button:hover {
     opacity: 0.8;
 }
 
-.view-details:focus {
+.view-details:focus, 
+.favorite-button:focus {
     outline: 2px solid currentColor;
     outline-offset: 2px;
 }

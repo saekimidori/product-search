@@ -102,16 +102,18 @@ function displayProducts(productsToDisplay) {
             <p class="category">${product.category}</p>
             <p class="rating">Rating: ${product.rating}</p>
             <p class="price">$${product.price.toFixed(2)}</p>
-            <button
-                class="view-details"
-                type="button"
-                aria-label="View details for ${product.title}"
-            >
-                View Details
-            </button>
-            <button class="favorite-button" type="button">
-                ♡ Add to Favorites
-            </button>
+            <div class="card-actions">
+                <button
+                    class="view-details"
+                    type="button"
+                    aria-label="View details for ${product.title}"
+                >
+                    View Details
+                </button>
+                <button class="favorite-button" type="button">
+                    ♡ Add to Favorites
+                </button>
+            </div>
         `
 
         const viewDetailsButton = productCard.querySelector('.view-details')
