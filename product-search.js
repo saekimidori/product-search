@@ -19,9 +19,18 @@ const urlParams = new URLSearchParams(window.location.search)
 const savedSearch = urlParams.get('search')
 const savedCategory = urlParams.get('category')
 const savedSort = urlParams.get('sort')
+const savedLimit = urlParams.get('limit')
 
 if (savedSearch) {
     searchInput.value = savedSearch
+}
+
+if (savedLimit) {
+    const parsedLimit = Number(savedLimit)
+
+    if (parsedLimit >= 12 && parsedLimit % 12 === 0) {
+        productsToShow = parsedLimit
+    }
 }
 
 fetch('https://dummyjson.com/products')
@@ -324,6 +333,7 @@ sortSelect.addEventListener('change', function() {
 loadMoreButton.addEventListener('click', function() {
     productsToShow += 12
     filterProducts(false)
+    updateURL()
 })
 
 function updateURL() {
@@ -343,6 +353,10 @@ function updateURL() {
 
     if (selectedSort && selectedSort !== 'default') {
         params.set('sort', selectedSort)
+    }
+
+    if (productsToShow > 12) {
+        params.set('limit', productsToShow)
     }
 
     const queryString = params.toString()
