@@ -1,8 +1,8 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: Georgia, sans-serif;
     margin: 0;
     padding: 40px;
-    background: #f5f5f5;
+    background: #ffe7ce;
 }
 
 h1 {
@@ -24,7 +24,7 @@ main {
 #search-input {
     flex: 1;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #f17a1e;
     border-radius: 6px;
     font-size: 16px;
 }
@@ -35,6 +35,17 @@ main {
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
+}
+
+select, button {
+    color: white;
+    background: #f17a1e;
+    border: 0;
+}
+
+select {
+    padding: 12px;
+    border-radius: 6px;
 }
 
 #product-results {
@@ -53,6 +64,10 @@ main {
     font-size: 16px;
 }
 
+#category-select:hover,
+#sort-select:hover,
+.submit-button:hover,
+#clear-search:hover,
 #load-more:hover {
     opacity: 0.8;
 }
@@ -73,7 +88,7 @@ main {
 
 #product-results article {
     background: white;
-    border: 1px solid #ddd;
+    border: 1px solid #f17a1e;
     border-radius: 8px;
     padding: 20px;
     transition: transform 0.2s;
