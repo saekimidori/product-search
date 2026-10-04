@@ -58,6 +58,8 @@ Product data is retrieved from the DummyJSON Products API.
 ## Future Improvements
 
 * Add more detailed product filtering
+* Add clear filters button
+* Add loading state
 * Add additional accessibility improvements
 * Add automated testing
 * Improve mobile navigation and controls
