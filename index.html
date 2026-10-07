@@ -48,18 +48,16 @@
             <button id="load-more">Load More</button>
         </div>
 
-        <div id="product-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <div class="modal-content" tabindex="-1">
-                <button
-                    id="close-modal"
-                    type="button"
-                    aria-label="Close product details"
-                >
-                    ×
-                </button>
-                <div id="product-details"></div>
-            </div>
-        </div>
+        <dialog id="product-modal" aria-labelledby="modal-title">
+            <button
+                id="close-modal"
+                type="button"
+                aria-label="Close product details"
+            >
+                ×
+            </button>
+            <div id="product-details"></div>
+        </dialog>
     </main>
 
     <script src="product-search.js"></script>

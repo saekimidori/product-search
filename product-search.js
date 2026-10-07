@@ -180,10 +180,7 @@ function showProductDetails(product) {
         <p class="modal-category">Category: ${product.category}</p>
         <p class="modal-stock">In stock: ${product.stock}</p>
     `
-
-    productModal.style.display = 'block'
-
-    productModal.querySelector('.modal-content').focus()
+    productModal.showModal()
 }
 
 function toggleFavorite(product) {
@@ -199,56 +196,12 @@ function toggleFavorite(product) {
 }
 
 closeModal.addEventListener('click', function() {
-    productModal.style.display = 'none'
-
-    if (lastFocusedElement) {
-        lastFocusedElement.focus()
-    }
+    productModal.close()
 })
 
 productModal.addEventListener('click', function(event) {
     if (event.target === productModal) {
-        productModal.style.display = 'none'
-    }
-
-    if (lastFocusedElement) {
-        lastFocusedElement.focus()
-    }
-})
-
-document.addEventListener('keydown', function(event) {
-    if (productModal.style.display !== 'block') {
-        return
-    }
-
-    if (event.key === 'Escape') {
-        productModal.style.display = 'none'
-
-        if (lastFocusedElement) {
-            lastFocusedElement.focus()
-        }
-
-        return
-    }
-
-    if (event.key === 'Tab') {
-        const focusableElements = productModal.querySelectorAll(
-            'button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        )
-
-        const firstElement = focusableElements[0]
-        const lastElement =
-            focusableElements[focusableElements.length - 1]
-
-        if (event.shiftKey && document.activeElement === firstElement) {
-            event.preventDefault()
-            lastElement.focus()
-        }
-
-        if (!event.shiftKey && document.activeElement === lastElement) {
-            event.preventDefault()
-            firstElement.focus()
-        }
+        productModal.close()
     }
 })
 
@@ -264,7 +217,7 @@ function filterProducts(resetLimit = true) {
     let filteredProducts = products.filter(product => {
         const matchesSearch = product.title
             .toLowerCase()
-            .includes(searchTerm);
+            .includes(searchTerm)
 
         const matchesCategory =
             selectedCategory === 'all' ||
