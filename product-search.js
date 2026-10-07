@@ -192,7 +192,7 @@ function toggleFavorite(product) {
 
     localStorage.setItem('favorites', JSON.stringify(favorites))
 
-    filterProducts()
+    filterProducts(false)
 }
 
 closeModal.addEventListener('click', function() {
